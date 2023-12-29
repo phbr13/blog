@@ -22,13 +22,20 @@
     </nav>
     <main>
         <img src="imgs/blog.png" alt="">
-        <div id="content">
-            <div id="caixa-titulo">
-                <h1 id="titulo">Imagine um lugar...</h1>
-                <p id="p-titulo">...um refúgio da inspiração. Anoto os filmes que cativam meus sentidos e os livros que me envolvem. Aqui, testemunho a jornada pelas maravilhas do cinema e da literatura, criando um registro que celebra as experiências simples e os momentos encantadores que encontro nesse universo de narrativas.</p>
-                <div id="botao">
-                    <span>Contemplar &#10140;</span>
-                </div>
+        <div class="armazem" id="content" style="background-color: rgba(0, 255, 255, 0);">
+            <div id="caixa-titulo-armazem">
+                <h1 id="titulo">Filmes</h1>
+                <hr>
+            </div>
+            <div id="caixa-armazem">
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
             </div>
         </div>
         <div id="blur"></div>   
@@ -59,19 +66,6 @@
             delay: 0.3,
             duration: 0.1,
             color: '#f5f4f5'
-        })
-        gsap.to('#p-titulo', {
-            y: 0,
-            opacity: 1,
-            delay: 2,
-            duration: 0.1,
-            color: '#f5f4f5cb'
-        })
-        gsap.to('#botao', {
-            y: 0,
-            opacity: 1,
-            delay: 2.3,
-            duration: 0.1,
         })
     </script>
 </body>
