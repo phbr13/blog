@@ -298,6 +298,70 @@ footer a svg{
     width: 25px;
 }
 
+#senha {
+    width: 210px;
+    height: 25px;
+    margin-top: 10px;
+    border-radius: 30px;
+    padding-left: 10px;
+    opacity: 0;
+    transform: translateY(13px);
+    transition: all 0.3s ease;
+}
+
+#btn-senha {
+    cursor: pointer;
+    background-color: var(--pumpkin);
+    height: 33px;
+    font-family: 'Romanus';
+    border-radius: 5px;
+    font-size: 20px;
+    margin-top: 8px;
+    opacity: 0;
+    transform: translateY(13px);
+    transition: all 0.3s ease;
+}
+
+#btn-senha:hover {
+    background-color: rgb(255, 141, 47);
+}
+
+@keyframes senhaerrada {
+    0% {
+        opacity: 1;
+    }
+    10% {
+        transform: rotate(5deg);
+    }
+    20% {
+        transform: rotate(-5deg);
+    }
+    30% {
+        transform: rotate(5deg);
+    }
+    40% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+    60% {
+        transform: rotate(-5deg);
+    }
+    70% {
+        transform: rotate(5deg);
+    }
+    80% {
+        transform: rotate(-5deg);
+    }
+    90% {
+        transform: rotate(5deg);
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 @media only screen and (min-width: 2300px) {
     body main #content {
         width: 1800px;
