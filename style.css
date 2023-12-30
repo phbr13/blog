@@ -104,6 +104,27 @@ main #content {
     justify-content: flex-start !important;
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(50, 50, 50);
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--blood-red);
+}
+
 #content #caixa-titulo {
     max-width: 800px;
 }
@@ -174,17 +195,50 @@ main #content {
 }
 
 #caixa-armazem .card {
-    width: 220px;
-    height: 270px;
-    background-color: rgb(22, 88, 88);
+    width: 164.46px;
+    height: 308px;
+    background-color: rgb(50, 50, 50);
     margin: 25px;
+    border-radius: 10px;
+    text-align: left;
+    transition: all 0.3s ease;
+    transform: translateY(13px);
+    opacity: 0;
+}
+
+.card img {
+    border: 0;
+    height: 250px;
+    width: 164.46px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.card h3 {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    color: var(--white-smoke-smoke);
+    font-weight: 300;
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
+
+.card #estrelas {
+    margin-left: 10px;
+}
+
+.checked {
+    color: orange;
 }
 
 #content hr {
-    width: 1090px;
+    width: 97%;
     height: 1px;
-    background-color: var(--taupe-gray);
+    opacity: 0;
+    transform: translateY(13px);
+    background-color: var(--pumpkin);
     border: 1px solid var(--taupe-gray);
+    transition: all 0.3s ease;
 }
 
 footer {
