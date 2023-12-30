@@ -309,7 +309,7 @@ footer a svg{
     transition: all 0.3s ease;
 }
 
-#btn-senha {
+#btn {
     cursor: pointer;
     background-color: var(--pumpkin);
     height: 33px;
@@ -322,8 +322,31 @@ footer a svg{
     transition: all 0.3s ease;
 }
 
-#btn-senha:hover {
+#btn:hover {
     background-color: rgb(255, 141, 47);
+}
+
+#pesquisa {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-left: 18px;
+}
+
+#pesquisa input {
+    margin-top: 44px;
+    margin-left: 18px;
+    width: 210px;
+    height: 25px;
+    border-radius: 30px;
+    padding-left: 10px;
+    opacity: 0;
+    transform: translateY(13px);
+    transition: all 0.3s ease;
+}
+
+.pesquisa-btn {
+    height: 35px !important;
 }
 
 @keyframes senhaerrada {

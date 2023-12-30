@@ -25,9 +25,13 @@
         <img src="imgs/blog.png" alt="">
         <div class="armazem" id="content" style="background-color: rgba(0, 255, 255, 0);">
             <div id="caixa-titulo-armazem">
-                div
-                <h1 id="titulo">Livros</h1>
-                <hr id="hr">
+                <div id="pesquisa">
+                    <h1 id="titulo">Pesquisa</h1>
+                    <input placeholder="&#128270; pesquisar" id="searchbar" type="text">
+                    <input class="pesquisa-btn" type="button" id="btn" value="Pesquisar Filme/Série">
+                    <input class="pesquisa-btn" type="button" id="btn" value="Pesquisar Livro">
+                </div>
+                <hr style="width: 100%;" id="hr">
             </div>
         </div>
         <div id="blur"></div>   
@@ -65,6 +69,18 @@
             backgroundColor: 'var(--taupe-gray)',
             stagger: 0.1,
             delay: 1.2,
+            duration: 0.1,
+        })
+        gsap.to('#searchbar', {
+            y: 0,
+            opacity: 1,
+            delay: 1,
+            duration: 0.1,
+        })
+        gsap.to('#btn', {
+            y: 0,
+            opacity: 1,
+            delay: 1,
             duration: 0.1,
         })
     </script>
