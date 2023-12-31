@@ -27,7 +27,7 @@
                 <h1 id="titulo">Senha</h1>
             </div>
             <input id="senha" type="password" placeholder="senha123" >
-            <input onclick="verificarSenha()" id="btn" type="button" value="Entrar">
+            <input onclick="verificarSenha()" class="btn" type="button" value="Entrar">
             <label style="margin-top: 8px; font-family: sans-serif; color: rgb(190, 37, 37); opacity: 1;transition: all 0.3s ease; opacity: 0;" id="aviso">Senha Errada!</label>
         </div>
         <div id="blur"></div>   
@@ -65,7 +65,7 @@
             delay: 0.8,
             duration: 0.1,
         })
-        gsap.to('#btn', {
+        gsap.to('.btn', {
             y: 0,
             opacity: 1,
             delay: 1,

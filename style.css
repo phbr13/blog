@@ -6,6 +6,7 @@
     --pumpkin: #f56e00ff;
     --blood-red: #660000ff;
     --smoky-black: #100a04ff;
+    --blue-mandariam: #37505F;
 }
 /* fonte */
 @font-face {
@@ -309,7 +310,7 @@ footer a svg{
     transition: all 0.3s ease;
 }
 
-#btn {
+.btn {
     cursor: pointer;
     background-color: var(--pumpkin);
     height: 33px;
@@ -322,7 +323,7 @@ footer a svg{
     transition: all 0.3s ease;
 }
 
-#btn:hover {
+.btn:hover {
     background-color: rgb(255, 141, 47);
 }
 
@@ -347,6 +348,49 @@ footer a svg{
 
 .pesquisa-btn {
     height: 35px !important;
+}
+
+#resultado-pesquisa {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.resultado {
+    width: 90%;
+    height: 100px;
+    margin: 5px;
+    background-color: rgb(50, 50, 50);
+    display: flex;
+    align-items: center;
+}
+
+.resultado img {
+    border: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.resultado h5 {
+    font-family: sans-serif;
+    color: var(--white-smoke-smoke);
+    font-size: 20px;
+}
+
+.resultado .btn {
+    margin-left: 13px;
+    margin-top: 0;
+    opacity: 1;
+    transform: translateY(0);
+    background-color: var(--blue-mandariam);
+    color: var(--white-smoke);
+    font-weight: 500;
+}
+
+.resultado .btn:hover {
+    background-color: #425e6e;
 }
 
 @keyframes senhaerrada {

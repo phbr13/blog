@@ -28,10 +28,42 @@
                 <div id="pesquisa">
                     <h1 id="titulo">Pesquisa</h1>
                     <input placeholder="&#128270; pesquisar" id="searchbar" type="text">
-                    <input class="pesquisa-btn" type="button" id="btn" value="Pesquisar Filme/Série">
-                    <input class="pesquisa-btn" type="button" id="btn" value="Pesquisar Livro">
+                    <input class="pesquisa-btn btn" type="button" value="Pesquisar Filme/Série">
+                    <input class="pesquisa-btn btn" type="button" value="Pesquisar Livro">
                 </div>
-                <hr style="width: 100%;" id="hr">
+                <hr style="width: 99%; align-self: center;" id="hr">
+                <div id="resultado-pesquisa">
+                    <div class="resultado">
+                        <img src="imgs/filmes/breaking-bad.jpg" alt="">
+                        <h5>Breaking Bad</h5>
+                        <input class="btn" type="button" value="Adicionar">
+                    </div>
+                    <div class="resultado">
+                        <img src="imgs/filmes/openheimer.jpg" alt="">
+                        <h5>Openheimer</h5>
+                        <input class="btn" type="button" value="Adicionar">
+                    </div>
+                    <div class="resultado">
+                        <img src="imgs/filmes/squid-game.jpg" alt="">
+                        <h5>Squid Game</h5>
+                        <input class="btn" type="button" value="Adicionar">
+                    </div>
+                    <div class="resultado">
+                        <img src="imgs/livros/capitaes-de-areia.jpg" alt="">
+                        <h5>Capitães da Areia</h5>
+                        <input class="btn" type="button" value="Adicionar">
+                    </div>
+                    <div class="resultado">
+                        <img src="imgs/livros/fahrenheit-451.jpg" alt="">
+                        <h5>Fahrenheit 451</h5>
+                        <input class="btn" type="button" value="Adicionar">
+                    </div>
+                    <div class="resultado">
+                        <img src="imgs/livros/o-menino-do-dedo-verde.jpg" alt="">
+                        <h5>O Menino do Dedo Verde</h5>
+                        <input class="btn" type="button" value="Adicionar">
+                    </div>
+                </div>
             </div>
         </div>
         <div id="blur"></div>   
@@ -77,7 +109,7 @@
             delay: 1,
             duration: 0.1,
         })
-        gsap.to('#btn', {
+        gsap.to('.btn', {
             y: 0,
             opacity: 1,
             delay: 1,
