@@ -6,10 +6,26 @@ function saiu(rota) {
     document.querySelector(`body > footer > a:nth-child(${rota}) > svg > path`).style.fill = "#f5f4f5"
 }
 
+//modificação da home page ppara adms 
+if (JSON.parse(localStorage.getItem("adm?")) == 'adm.') {
+    if (window.location.pathname == "/index.html") {
+        document.querySelector("#botao > span").innerHTML = 'Registrar &#10140;'
+        document.querySelector("#botao > span").setAttribute( "onClick", "window.location.href = 'admin_senha.html';" )
+    }
+}
+
 //verificação de senha para entrar na página de adm
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        if (window.location.pathname == "/admin_senha.html") {
+            verificarSenha()
+        }
+    }
+});
 function verificarSenha() {
     const senha = document.querySelector("#senha").value
     if(senha === "salamaleiko") {
+        localStorage.setItem("adm?", JSON.stringify("adm."))
         window.location.href = "admin_dashboard.html"
     } else {
         const senhaerrada = document.querySelector("#aviso")
