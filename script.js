@@ -1,4 +1,4 @@
-// tabbar entradas e saidas para trocar de página
+//tabbar entradas e saidas para trocar de página
 function entrou(rota) {
     document.querySelector(`body > footer > a:nth-child(${rota}) > svg > path`).style.fill = "#f56e00ff"
 }
