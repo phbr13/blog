@@ -24,6 +24,21 @@ document.addEventListener('keydown', function(event) {
 });
 function verificarSenha() {
     const senha = document.querySelector("#senha").value
+    // Enviar dados para o servidor
+    fetch('http://localhost:3000/senha_adm', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({senha})
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Resposta do servidor:', data);
+      })
+      .catch(error => {
+        console.error('Erro ao enviar a solicitação:', error);
+      });
     if(senha === "salamaleiko") {
         localStorage.setItem("adm?", JSON.stringify("adm."))
         window.location.href = "admin_dashboard.html"
