@@ -6,7 +6,7 @@ function saiu(rota) {
     document.querySelector(`body > footer > a:nth-child(${rota}) > svg > path`).style.fill = "#f5f4f5"
 }
 
-//modificação da home page ppara adms 
+//modificação da home page para adms 
 if (JSON.parse(localStorage.getItem("adm?")) == 'adm.') {
     if (window.location.pathname == "/index.html") {
         document.querySelector("#botao > span").innerHTML = 'Registrar &#10140;'
@@ -24,29 +24,27 @@ document.addEventListener('keydown', function(event) {
 });
 function verificarSenha() {
     const senha = document.querySelector("#senha").value
-    // Enviar dados para o servidor
-    fetch('http://localhost:3000/senha_adm', {
+    fetch('http://localhost:1313/senha_adm', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({senha})
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Resposta do servidor:', data);
-      })
-      .catch(error => {
+        })
+        .then(response => response.json())
+        .then(data => {
+        if(data.acerto) {
+            localStorage.setItem("adm?", JSON.stringify("adm."))
+            window.location.href = "admin_dashboard.html"
+        } else {
+            const senhaerrada = document.querySelector("#aviso")
+            senhaerrada.style.animation = "senhaerrada normal 5s"
+            setTimeout(() => {
+                senhaerrada.style.animation = ""
+            }, 5050);
+        }
+        })
+        .catch(error => {
         console.error('Erro ao enviar a solicitação:', error);
-      });
-    if(senha === "salamaleiko") {
-        localStorage.setItem("adm?", JSON.stringify("adm."))
-        window.location.href = "admin_dashboard.html"
-    } else {
-        const senhaerrada = document.querySelector("#aviso")
-        senhaerrada.style.animation = "senhaerrada normal 5s"
-        setTimeout(() => {
-            document.querySelector("#aviso").style.animation = ""
-        }, 5050);
-    }
+    });
 }
