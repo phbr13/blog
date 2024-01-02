@@ -61,6 +61,7 @@ function verificarSenha(AdmJaConectado) {
         })
         .catch(error => {
         console.error('Erro ao enviar a solicitação:', error);
+        alert('Algo de errado com o servidor.');
     });
 }
 
