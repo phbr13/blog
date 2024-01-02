@@ -10,7 +10,7 @@ function saiu(rota) {
 if (JSON.parse(localStorage.getItem("adm?")) == 'adm.') {
     if (window.location.pathname == "/index.html") {
         document.querySelector("#botao > span").innerHTML = 'Registrar &#10140;'
-        document.querySelector("#botao > span").setAttribute( "onClick", "window.location.href = 'admin_senha.html';" )
+        document.querySelector("#botao > span").setAttribute( "onClick", "window.location.href = 'admin.html';" )
     }
 }
 
