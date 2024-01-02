@@ -35,7 +35,7 @@ function verificarSenha() {
         .then(data => {
         if(data.acerto) {
             localStorage.setItem("adm?", JSON.stringify("adm."))
-            window.location.href = "admin_dashboard.html"
+            document.documentElement.innerHTML = data.arquivo;
         } else {
             const senhaerrada = document.querySelector("#aviso")
             senhaerrada.style.animation = "senhaerrada normal 5s"
