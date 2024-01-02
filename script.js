@@ -14,16 +14,29 @@ if (JSON.parse(localStorage.getItem("adm?")) == 'adm.') {
     }
 }
 
+//dispositivo que já entrou como adm
+if (window.location.pathname == "/admin.html") {
+    const adm = localStorage.getItem("adm?")
+    if (adm === '"adm."') {
+        verificarSenha(true)
+    }
+}
+
 //verificação de senha para entrar na página de adm
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
-        if (window.location.pathname == "/admin_senha.html") {
+        if (window.location.pathname == "/admin.html") {
             verificarSenha()
         }
     }
 });
-function verificarSenha() {
-    const senha = document.querySelector("#senha").value
+function verificarSenha(AdmJaConectado) {
+    let senha
+    if(AdmJaConectado) {
+        senha = localStorage.senha
+    } else {
+        senha = document.querySelector("#senha").value
+    }
     fetch('http://localhost:1313/senha_adm', {
         method: 'POST',
         headers: {
@@ -35,8 +48,10 @@ function verificarSenha() {
         .then(data => {
         if(data.acerto) {
             localStorage.setItem("adm?", JSON.stringify("adm."))
+            localStorage.setItem("senha", data.senha)
             document.documentElement.innerHTML = data.arquivo;
         } else {
+            localStorage.setItem("senha", JSON.stringify(data.senha))
             const senhaerrada = document.querySelector("#aviso")
             senhaerrada.style.animation = "senhaerrada normal 5s"
             setTimeout(() => {
@@ -47,4 +62,12 @@ function verificarSenha() {
         .catch(error => {
         console.error('Erro ao enviar a solicitação:', error);
     });
+}
+
+//parte do dashboard (pesquisa do conteudo)
+function pesquisarFilme() {
+    console.log(document.querySelector("#searchbar").value)
+}
+function pesquisarLivro() {
+    console.log(document.querySelector("#searchbar").value)
 }
