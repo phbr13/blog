@@ -67,8 +67,39 @@ function verificarSenha(AdmJaConectado) {
 
 //parte do dashboard (pesquisa do conteudo)
 function pesquisarFilme() {
-    console.log(document.querySelector("#searchbar").value)
+    const filme = document.querySelector("#searchbar").value
+    const resultadoPesquisa = document.querySelector("#resultado-pesquisa")
+    resultadoPesquisa.innerHTML=''
+    const options = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzNjZlMTM5MjFiODIwYWFhZmE2YTY5MjYwNDlmMmUwNyIsInN1YiI6IjY1OTViMmJiMzI2ZWMxMDY3MTA2YzE4MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.7JFdsfoWvql9rEP_XyrKv2SB8HpXbvJHg4o9bDhYc14'
+        }
+    };
+    fetch(`https://api.themoviedb.org/3/search/movie?query=${filme}&include_adult=false&language=pt-BR&page=1`, options)
+    .then(response => response.json())
+    .then(response => {
+        console.log(response.results)
+        response.results.forEach(element => {
+            if (element.poster_path === null) {
+                imgFilme = 'imgs/none.jpg'
+            } else {
+                imgFilme = `https://image.tmdb.org/t/p/w500${element.poster_path}`
+            }
+            resultadoPesquisa.innerHTML += `
+            <div class="resultado">
+                <img src="${imgFilme}" alt="">
+                <h5>${element.title} <span style="font-size: 13px; color: #797979;font-style: italic;">(${element.release_date})</span></h5>
+                <input class="btn" type="button" value="Detalhes">
+            </div>
+            `
+        });
+    })
+    .catch(err => console.error(err));
 }
 function pesquisarLivro() {
     console.log(document.querySelector("#searchbar").value)
 }
+
+// backdrop_path/ genre_ids/ original_title/ title/ overview/ release_date/ vote_average vote_count
