@@ -133,6 +133,11 @@ function identificarGen(genres, especificar) {
     return generos.slice(0, -2)
 }
 
+//adicionar o conteudo/obras ao seu repertório pessoal(banco de dados, refúgio da inspiração, oq vc preferir chamar:D)
+function adicionar(id, tipoObra) {
+    console.log(id, tipoObra)
+}
+
 //display do resultado da pesquisa generico para filmes e series
 function displayContent(especificar) {
     const search = document.querySelector("#searchbar").value
@@ -188,6 +193,7 @@ function displayContent(especificar) {
                 <img src="${img}" alt="">
                 <h5>${nome.brasileiro} <span style="font-size: 13px; color: #797979;font-style: italic;">(${data})</span></h5>
                 <input class="btn" type="button" value="Detalhes" onclick="aparecerDetals(${element.id})">
+                <input class="btn" type="button" value="Adicionar" onclick="adicionar(${element.id}, '${especificar}')">
             </div>
             <div class="card-obra-detals" id="${element.id}">
             <div class="fundo-detals" onclick="desaparecerDetals(${element.id})"></div>
@@ -220,3 +226,21 @@ function pesquisarSerie() {
 function pesquisarLivro() {
     console.log(document.querySelector("#searchbar").value)
 }
+
+/* 
+<div class="card-obra-detals" id="${element.id}">
+<div class="fundo-detals" onclick="desaparecerDetals(${element.id})"></div>
+<div class="card-detals obra${element.id}">
+<img style="border: 0;" src="${poster}" alt="">
+<div style="padding-right: 13px;">
+<h5>${nome.brasileiro}</h5>
+<h5 style="margin-top: -5px;"><span style="font-size: 13px; color: #797979;font-style: italic;">${nome.original} (${data})</span></h5>
+<h5 style="margin-top: -5px;"><span style="font-size: 13px; color: #797979;font-style: italic;">Gênero(s): ${generos}</span></h5>
+<h5 style="font-size: 18px;">Sinopse</h5> 
+<p style="margin-bottom: 0; font-size: 16px;">${overview}</p>
+<h5 style="font-size: 18px">Avaliação</h5>
+<h5 style="margin-top: -5px;margin-bottom: 13px;"><span style="font-size: 13px; color: #797979;font-style: italic;">${element.vote_average.toFixed(1)}/10 de acordo com ${element.vote_count} usuário(s) do <a href="https://www.themoviedb.org/" target="_blank" style="color: #797979;">TMDB</a></span></h5>
+</div>
+</div>
+</div> 
+*/
