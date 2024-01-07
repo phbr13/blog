@@ -65,6 +65,23 @@ function verificarSenha(AdmJaConectado) {
     });
 }
 
+//funcao para mudar o valor das estrelas de rating
+function mudarStar(valor) {
+    const estrelas = document.querySelector("#estrelas")
+    estrelas.innerHTML=""
+    let num = Number(valor.toString()[0])
+    for (let index = 0; index < num; index++) {
+        estrelas.innerHTML += `
+            <span class="fa fa-star checked"></span>
+        `
+    }
+    if (valor.toString()[2] === '5') {
+        estrelas.innerHTML += `
+            <span class="fa fa-star halfchecked"></span>
+        `
+    }
+}
+
 //funcoes para aparecer e desaparecer os detalhes dos filmes/series
 function aparecerDetals(id) {
     const detals = document.getElementById(`${id}`)
@@ -136,6 +153,7 @@ function identificarGen(genres, especificar) {
 //adicionar o conteudo/obras ao seu repertório pessoal(banco de dados, refúgio da inspiração, oq vc preferir chamar:D)
 function adicionar(id, tipoObra) {
     console.log(id, tipoObra)
+    aparecerDetals('-qualquer')
 }
 
 //display do resultado da pesquisa generico para filmes e series

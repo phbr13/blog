@@ -456,6 +456,20 @@ footer a svg{
     color: #f5f4f5af;
 }
 
+#input-comentario {
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 13px; 
+    margin-top: 5px; 
+    width: 90%; 
+    margin-right: 13px;
+    border-radius: 5px; 
+    background-color: hsla(0, 0%, 0%, 0.500);
+    border: 0;
+    color: var(--white-smoke-smoke);
+}
+
 @keyframes senhaerrada {
     0% {
         opacity: 1;

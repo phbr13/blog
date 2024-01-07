@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="imgs/torch.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Alcáçova Audiovisual</title>
 </head>
 <body>
@@ -31,6 +32,29 @@
                 </div>
             </div>
         </div>
+        <div style="display: flex; opacity: 1;" class="card-obra-detals" id="-qualquer">
+            <div class="fundo-detals" onclick="desaparecerDetals('-qualquer')"></div>
+            <div style="opacity: 1; transform: translateY(0);" class="card-detals obra-qualquer">
+                <img style="border: 0;" src="https://image.tmdb.org/t/p/w500/9faGSFi5jam6pDWGNd0p8JcJgXQ.jpg" alt="">
+                <h5 style="margin-top: 13px;">Adicionar "Breaking Bad"</h5>
+                <hr style="margin: 10px 13px; background-color: var(--taupe-gray); border: 1px solid var(--taupe-gray);">
+                <h5 style="font-size: 18px;margin-top: 20px;">Avaliar</h5>
+                <div style="margin-left: 13px; margin-top: 5px;" id="todas-estrelas">
+                    <div id="estrelas">
+                    </div>
+                    <div id="background-estrelas">
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
+                </div>
+                <input style="margin-left: 13px; margin-top: 3px; background-color: hsla(0, 0%, 0%, 0.500); color: var(--white-smoke); border: 0; padding: 8px; border-radius: 5px;" min="0" max="5" type="number" step="0.5" onkeydown="return false" value="0" onchange="mudarStar(this.value)">
+                <h5 style="font-size: 18px;margin-top: 20px;">Comentar algo</h5>
+                <input id="input-comentario" type="text">
+            </div>
+        </div> 
         <div id="blur"></div>   
     </main>
     <footer>
