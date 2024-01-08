@@ -151,8 +151,10 @@ function identificarGen(genres, especificar) {
 }
 
 //adicionar o conteudo/obras ao seu repertório pessoal(banco de dados, refúgio da inspiração, oq vc preferir chamar:D)
-function adicionar(id, tipoObra) {
-    console.log(id, tipoObra)
+function adicionar(id, tipoObra, nome, img) {
+    console.log(id, tipoObra, nome, img)
+    document.querySelector("#-qualquer > div.card-detals.obra-qualquer > h5:nth-child(2)").innerHTML = `Adicionar "${nome}"`
+    document.querySelector("#-qualquer > div.card-detals.obra-qualquer > img").src = img
     aparecerDetals('-qualquer')
 }
 
@@ -211,7 +213,7 @@ function displayContent(especificar) {
                 <img src="${img}" alt="">
                 <h5>${nome.brasileiro} <span style="font-size: 13px; color: #797979;font-style: italic;">(${data})</span></h5>
                 <input class="btn" type="button" value="Detalhes" onclick="aparecerDetals(${element.id})">
-                <input class="btn" type="button" value="Adicionar" onclick="adicionar(${element.id}, '${especificar}')">
+                <input class="btn" type="button" value="Adicionar" onclick="adicionar(${element.id}, '${especificar}', '${nome.original}', '${poster}')">
             </div>
             <div class="card-obra-detals" id="${element.id}">
             <div class="fundo-detals" onclick="desaparecerDetals(${element.id})"></div>
