@@ -151,11 +151,39 @@ function identificarGen(genres, especificar) {
 }
 
 //adicionar o conteudo/obras ao seu repertório pessoal(banco de dados, refúgio da inspiração, oq vc preferir chamar:D)
-function adicionar(id, tipoObra, nome, img) {
-    console.log(id, tipoObra, nome, img)
+function adicionarCard(id, tipoObra, nome, img) {
     document.querySelector("#-qualquer > div.card-detals.obra-qualquer > h5:nth-child(2)").innerHTML = `Adicionar "${nome}"`
+    const seila = document.querySelector('#botoes > input:nth-child(1)')
+    seila.setAttribute('data-id', `${id}`)
+    seila.setAttribute('data-tipoObra', `${tipoObra}`)
     document.querySelector("#-qualquer > div.card-detals.obra-qualquer > img").src = img
     aparecerDetals('-qualquer')
+}
+function adicionarTrue(id, tipoObra) {
+    const aval = document.querySelector("#-qualquer > div.card-detals.obra-qualquer > input[type=number]:nth-child(6)")
+    const coment = document.querySelector("#input-comentario")
+    const obra = {
+        id: id,
+        tipoObra: tipoObra,
+        avaliacao: aval.value,
+        comentario: coment.value,
+        senha: localStorage.senha
+    }
+    fetch('http://localhost:1313/post', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({obra})
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(`%c${data.resposta}`, 'background-color: #37505F; padding: 15px; font-family: sans-serif')
+        })
+        .catch(error => {
+        console.error('Erro ao enviar a solicitação:', error);
+        alert('Algo de errado com o servidor.');
+    });
 }
 
 //display do resultado da pesquisa generico para filmes e series
@@ -213,7 +241,7 @@ function displayContent(especificar) {
                 <img src="${img}" alt="">
                 <h5>${nome.brasileiro} <span style="font-size: 13px; color: #797979;font-style: italic;">(${data})</span></h5>
                 <input class="btn" type="button" value="Detalhes" onclick="aparecerDetals(${element.id})">
-                <input class="btn" type="button" value="Adicionar" onclick="adicionar(${element.id}, '${especificar}', '${nome.original}', '${poster}')">
+                <input class="btn" type="button" value="Adicionar" onclick="adicionarCard(${element.id}, '${especificar}', '${nome.original}', '${poster}')">
             </div>
             <div class="card-obra-detals" id="${element.id}">
             <div class="fundo-detals" onclick="desaparecerDetals(${element.id})"></div>
@@ -246,21 +274,3 @@ function pesquisarSerie() {
 function pesquisarLivro() {
     console.log(document.querySelector("#searchbar").value)
 }
-
-/* 
-<div class="card-obra-detals" id="${element.id}">
-<div class="fundo-detals" onclick="desaparecerDetals(${element.id})"></div>
-<div class="card-detals obra${element.id}">
-<img style="border: 0;" src="${poster}" alt="">
-<div style="padding-right: 13px;">
-<h5>${nome.brasileiro}</h5>
-<h5 style="margin-top: -5px;"><span style="font-size: 13px; color: #797979;font-style: italic;">${nome.original} (${data})</span></h5>
-<h5 style="margin-top: -5px;"><span style="font-size: 13px; color: #797979;font-style: italic;">Gênero(s): ${generos}</span></h5>
-<h5 style="font-size: 18px;">Sinopse</h5> 
-<p style="margin-bottom: 0; font-size: 16px;">${overview}</p>
-<h5 style="font-size: 18px">Avaliação</h5>
-<h5 style="margin-top: -5px;margin-bottom: 13px;"><span style="font-size: 13px; color: #797979;font-style: italic;">${element.vote_average.toFixed(1)}/10 de acordo com ${element.vote_count} usuário(s) do <a href="https://www.themoviedb.org/" target="_blank" style="color: #797979;">TMDB</a></span></h5>
-</div>
-</div>
-</div> 
-*/
