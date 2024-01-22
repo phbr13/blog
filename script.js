@@ -178,7 +178,7 @@ function adicionarTrue(id, tipoObra) {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(`%c${data.resposta}`, 'background-color: #37505F; padding: 15px; font-family: sans-serif')
+            console.log(`%c${data.resposta}`, 'background-color: #37505F; padding: 15px; font-family: sans-serif; font-size: 10px')
         })
         .catch(error => {
         console.error('Erro ao enviar a solicitação:', error);
