@@ -160,6 +160,7 @@ function adicionarCard(id, tipoObra, nome, img) {
     aparecerDetals('-qualquer')
 }
 function adicionarTrue(id, tipoObra) {
+    document.querySelector("#botoes > input:nth-child(1)").disabled = true
     const aval = document.querySelector("#-qualquer > div.card-detals.obra-qualquer > input[type=number]:nth-child(6)")
     const coment = document.querySelector("#input-comentario")
     const obra = {
@@ -178,7 +179,19 @@ function adicionarTrue(id, tipoObra) {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(`%c${data.resposta}`, 'background-color: #37505F; padding: 15px; font-family: sans-serif; font-size: 10px')
+            console.log(`%c${data.resposta}`, 'background-color: #37505F; padding: 5px; font-family: sans-serif; font-size: 10px')
+            desaparecerDetals('-qualquer');
+            document.querySelector('#-qualquer > div.card-detals.obra-qualquer > input[type=number]:nth-child(6)').value = 0;
+            document.querySelector('#input-comentario').value = '';
+            mudarStar(0)
+            setTimeout(() => {
+                document.querySelector("#botoes > input:nth-child(1)").disabled = false
+                if(data.deuruim) {
+                    alert('A adição falhou! Provavelmente ocorreu um erro no servidor.')
+                } else {
+                    alert('A adição ocorreu com sucesso!')
+                }
+            }, 500);
         })
         .catch(error => {
         console.error('Erro ao enviar a solicitação:', error);
