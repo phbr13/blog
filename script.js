@@ -150,20 +150,29 @@ function identificarGen(genres, especificar) {
     return generos.slice(0, -2)
 }
 
+function sumirInfosAdicao() {
+    desaparecerDetals('-qualquer');
+    document.querySelector('#-qualquer > div.card-detals.obra-qualquer > input[type=number]:nth-child(6)').value = 0;
+    document.querySelector('#input-comentario').value = '';
+    mudarStar(0)
+}
+
 //adicionar o conteudo/obras ao seu repertório pessoal(banco de dados, refúgio da inspiração, oq vc preferir chamar:D)
 function adicionarCard(id, tipoObra, nome, img) {
     document.querySelector("#-qualquer > div.card-detals.obra-qualquer > h5:nth-child(2)").innerHTML = `Adicionar "${nome}"`
     const seila = document.querySelector('#botoes > input:nth-child(1)')
     seila.setAttribute('data-id', `${id}`)
     seila.setAttribute('data-tipoObra', `${tipoObra}`)
+    seila.setAttribute('data-nomeObra', nome)
     document.querySelector("#-qualquer > div.card-detals.obra-qualquer > img").src = img
     aparecerDetals('-qualquer')
 }
-function adicionarTrue(id, tipoObra) {
+function adicionarTrue(id, tipoObra, nome) {
     document.querySelector("#botoes > input:nth-child(1)").disabled = true
     const aval = document.querySelector("#-qualquer > div.card-detals.obra-qualquer > input[type=number]:nth-child(6)")
     const coment = document.querySelector("#input-comentario")
     const obra = {
+        nome: nome,
         id: id,
         tipoObra: tipoObra,
         avaliacao: aval.value,
@@ -180,10 +189,7 @@ function adicionarTrue(id, tipoObra) {
         .then(response => response.json())
         .then(data => {
             console.log(`%c${data.resposta}`, 'background-color: #37505F; padding: 5px; font-family: sans-serif; font-size: 10px')
-            desaparecerDetals('-qualquer');
-            document.querySelector('#-qualquer > div.card-detals.obra-qualquer > input[type=number]:nth-child(6)').value = 0;
-            document.querySelector('#input-comentario').value = '';
-            mudarStar(0)
+            sumirInfosAdicao()
             setTimeout(() => {
                 document.querySelector("#botoes > input:nth-child(1)").disabled = false
                 if(data.deuruim) {

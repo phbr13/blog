@@ -116,6 +116,20 @@
     <script src="https://unpkg.com/split-type"></script>
     <script src="script.js"></script>
     <script>
+        fetch('http://localhost:1313/getFilmes', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.resposta)
+        })
+        .catch(error => {
+            console.error('Erro ao enviar a solicitação:', error);
+            alert('Algo de errado com o servidor.');
+        });
         const myText = new SplitType("#titulo")
         gsap.to('.char', {
             y: 0,
