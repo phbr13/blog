@@ -66,8 +66,11 @@ function verificarSenha(AdmJaConectado) {
 }
 
 //funcao para mudar o valor das estrelas de rating
-function mudarStar(valor) {
-    const estrelas = document.querySelector("#estrelas")
+function mudarStar(valor, abaADM, id) {
+    let estrelas = document.querySelector("#estrelas")
+    if (abaADM === false) {
+        estrelas = document.querySelector(`#estrelas[data-id="${id}"]`)
+    }
     estrelas.innerHTML=""
     let num = Number(valor.toString()[0])
     for (let index = 0; index < num; index++) {

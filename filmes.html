@@ -29,71 +29,6 @@
                 <hr id="hr">
             </div>
             <div id="caixa-armazem">
-                <div class="card">
-                    <img src="imgs/filmes/openheimer.jpg" alt="">
-                    <h3 title="Oppenheimer">Oppenheimer</h3>
-                    <div id="todas-estrelas">
-                        <div id="estrelas" title="5">
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                        </div>
-                        <div id="background-estrelas">
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="imgs/filmes/squid-game.jpg" alt="">
-                    <h3 title="Squid Game">Squid Game</h3>
-                    <div id="todas-estrelas">
-                        <div id="estrelas" title="4.5">
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star halfchecked"></span>
-                        </div>
-                        <div id="background-estrelas">
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="imgs/filmes/breaking-bad.jpg" alt="">
-                    <h3 title="Breaking Bad">Breaking Bad</h3>
-                    <div id="todas-estrelas">
-                        <div id="estrelas" title="5">
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                        </div>
-                        <div id="background-estrelas">
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
             </div>
         </div>
         <div id="blur"></div>   
@@ -116,6 +51,30 @@
     <script src="https://unpkg.com/split-type"></script>
     <script src="script.js"></script>
     <script>
+        //funcao para mostrar dados pegos BETA
+        function showFilmeSeries(poster, nome, aval, id) {
+            const caixaArmazem = document.querySelector("#caixa-armazem")
+            caixaArmazem.innerHTML += `
+                <div class="card">
+                    <img src="https://image.tmdb.org/t/p/w500/${poster}" alt="">
+                    <h3 title="${nome}">${nome}</h3>
+                    <div title="${aval}" id="todas-estrelas">
+                        <div data-id="${id}" id="estrelas">
+                        </div>
+                        <div id="background-estrelas">
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                        </div>
+                    </div>
+                </div>
+            `
+            mudarStar(aval, false, id)
+        }
+
+        //requisição para api para pegar filmeseries salvos(e suas avaliacoes e comentários) na alcalcova e dps fzr requisicao para a API do TMDB para complementar informações
         fetch('http://localhost:1313/getFilmes', {
             method: 'GET',
             headers: {
@@ -124,7 +83,29 @@
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data.resposta)
+            data.resposta.forEach(element => {
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        accept: 'application/json',
+                        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzNjZlMTM5MjFiODIwYWFhZmE2YTY5MjYwNDlmMmUwNyIsInN1YiI6IjY1OTViMmJiMzI2ZWMxMDY3MTA2YzE4MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.7JFdsfoWvql9rEP_XyrKv2SB8HpXbvJHg4o9bDhYc14'
+                    }
+                };
+                fetch(`https://api.themoviedb.org/3/${element.tipoObra}/${element.idObra}?language=pt-BR`, options)
+                .then(response => response.json())
+                .then(response => {
+                    console.log(response)
+                    showFilmeSeries(response.poster_path, element.Obra, element.avaliacao, element.idObra)
+                    gsap.to('.card', {
+                        y: 0,
+                        opacity: 1,
+                        stagger: 0.13,
+                        delay: 1.5,
+                        duration: 0.1,
+                    })
+                })
+                .catch(err => console.error(err));
+            });
         })
         .catch(error => {
             console.error('Erro ao enviar a solicitação:', error);
@@ -145,13 +126,6 @@
             backgroundColor: 'var(--taupe-gray)',
             stagger: 0.1,
             delay: 1.2,
-            duration: 0.1,
-        })
-        gsap.to('.card', {
-            y: 0,
-            opacity: 1,
-            stagger: 0.13,
-            delay: 1.5,
             duration: 0.1,
         })
     </script>
