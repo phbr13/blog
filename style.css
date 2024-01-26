@@ -208,6 +208,10 @@ main #content {
     opacity: 0;
 }
 
+#caixa-armazem .card:hover {
+    cursor: pointer;
+}
+
 .card img {
     border: 0;
     height: 290.5528px;
