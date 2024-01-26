@@ -53,12 +53,16 @@
     <script src="script.js"></script>
     <script>
         //funcao para mostrar dados pegos BETA
-        function showFilmeSeries(poster, nome, aval, id) {
+        function showFilmeSeries(poster, nome, aval, id, tipo) {
+            let tipoObra
+            if (tipo === 'movie') {tipoObra = 'Filme'}
+            if (tipo === 'tv') {tipoObra = 'Série'}
             const caixaArmazem = document.querySelector("#caixa-armazem")
             caixaArmazem.innerHTML += `
                 <div class="card">
                     <img src="https://image.tmdb.org/t/p/w500/${poster}" alt="">
                     <h3 title="${nome}">${nome}</h3>
+                    <h5 style="margin-top: -5px; margin-left: 10px; margin-bottom: 5px; font-family: sans-serif;"><span style="font-size: 13.72px; color: #797979;">${tipoObra}</span></h5>
                     <div title="${aval}" id="todas-estrelas">
                         <div data-id="${id}" id="estrelas">
                         </div>
@@ -98,7 +102,7 @@
                 .then(response => response.json())
                 .then(response => {
                     console.log(response)
-                    showFilmeSeries(response.poster_path, element.Obra, element.avaliacao, element.idObra)
+                    showFilmeSeries(response.poster_path, element.Obra, element.avaliacao, element.idObra, element.tipoObra)
                     gsap.to('.card', {
                         y: 0,
                         opacity: 1,

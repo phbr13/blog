@@ -197,8 +197,8 @@ main #content {
 }
 
 #caixa-armazem .card {
-    width: 164.46px;
-    height: 308px;
+    width: 192.92px;
+    height: 364px;
     background-color: rgb(50, 50, 50);
     margin: 25px;
     border-radius: 10px;
@@ -210,8 +210,8 @@ main #content {
 
 .card img {
     border: 0;
-    height: 250px;
-    width: 164.46px;
+    height: 290.5528px;
+    width: 192.92px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
 }
@@ -226,6 +226,7 @@ main #content {
     overflow: hidden !important;
     text-overflow: ellipsis;
     white-space: nowrap;
+    padding-right: 10px;
 }
 
 .card #todas-estrelas {
