@@ -23,7 +23,7 @@
     </nav>
     <main>
         <img src="imgs/blog.png" alt="">
-        <div class="armazem" id="content" style="background-color: rgba(0, 255, 255, 0);">
+        <div onscroll="verificarFimDoScroll(this)" class="armazem" id="content" style="background-color: rgba(0, 255, 255, 0);">
             <div id="caixa-titulo-armazem">
                 <h1 id="titulo">Filmes e Séries</h1>
                 <hr id="hr">
@@ -54,16 +54,23 @@
     <script>
         //funcao para criar e mostrar card da obra de acordo com dados armazenados no session storage, com o intuito de otimizar o site carregando conteudo de 15 em 15(de acordo com a scrollagem) para nao pesar muito, deu pra entender?? :X
         sessionStorage.setItem('obras', JSON.stringify([]));
-        function showCardObra(infoObra) {
-            console.log(infoObra)
+        let cf = [0, 15]
+        function showCardObra(comeco, fim) {
             const caixaArmazem = document.querySelector("#caixa-armazem")
-            caixaArmazem.innerHTML += `
-                <div class="card">
-                    <img loading="lazy" src="https://image.tmdb.org/t/p/w500/${infoObra.moreInfo.poster_path}" alt="">
-                    <h3 title="${infoObra.nome}">${infoObra.nome}</h3>
-                    <h5 style="margin-top: -5px; margin-left: 10px; margin-bottom: 5px; font-family: sans-serif;"><span style="font-size: 13.72px; color: #797979;">${infoObra.tipoObra}</span></h5>
-                    <div title="${infoObra.aval}" id="todas-estrelas">
-                        <div data-id="${infoObra.id}" id="estrelas">
+            const array = JSON.parse(sessionStorage.getItem('obras'))
+            let card = 'card'
+            if (fim > 15) {
+                card = 'cardmore'
+            }
+            for (let index = comeco; index < fim; index++) {
+                const element = array[index];
+                caixaArmazem.innerHTML += `
+                <div class="card ${card}">
+                    <img loading="lazy" src="https://image.tmdb.org/t/p/w500/${element.moreInfo.poster_path}" alt="">
+                    <h3 title="${element.nome}">${element.nome}</h3>
+                    <h5 style="margin-top: -5px; margin-left: 10px; margin-bottom: 5px; font-family: sans-serif;"><span style="font-size: 13.72px; color: #797979;">${element.tipoObra}</span></h5>
+                    <div title="${element.aval}" id="todas-estrelas">
+                        <div data-id="${element.id}" id="estrelas">
                         </div>
                         <div id="background-estrelas">
                             <span class="fa fa-star"></span>
@@ -73,13 +80,32 @@
                             <span class="fa fa-star"></span>
                         </div>
                     </div>
-                </div>
-            `
-            mudarStar(infoObra.aval, false, infoObra.id)
+                </div>`
+                mudarStar(element.aval, false, element.id)
+            }
+            gsap.to('.card', {
+                y: 0,
+                opacity: 1,
+                stagger: 0.13,
+                delay: 1.5,
+                duration: 0.1,
+            })
+            gsap.to('.cardmore', {
+                y: 0,
+                opacity: 1,
+                delay: .5,
+                duration: 0.1,
+            })
+            const opa = JSON.parse(sessionStorage.getItem('obras')).length
+            if (fim + 15 > opa ) {
+                cf = [fim, fim + (opa - fim)]
+            } else {
+                cf = [fim, fim + 15]
+            }
         }
 
         //funcao para guardar dados pegos na databaseAPI
-        function guardarFilmeSeries(response, nome, aval, id, tipo, coment) {
+        function guardarFilmeSeries(response, nome, aval, id, tipo, coment, baboe) {
             let tipoObra
             if (tipo === 'movie') {tipoObra = 'Filme'}
             if (tipo === 'tv') {tipoObra = 'Série'}
@@ -94,6 +120,9 @@
             let contentDisplay = JSON.parse(sessionStorage.getItem('obras'))
             contentDisplay.push(obra)
             sessionStorage.setItem('obras', JSON.stringify(contentDisplay))
+            if (baboe) {
+                showCardObra(cf[0], cf[1])
+            }
         }
 
         //requisição para api para pegar filmeseries salvos(e suas avaliacoes e comentários) na alcalcova e dps fzr requisicao para a API do TMDB para complementar informações
@@ -107,6 +136,8 @@
         .then(data => {
             const caixaArmazem = document.querySelector("#caixa-armazem")
             caixaArmazem.innerHTML = ""
+            let penis = 0
+            const pau = data.resposta.length
             data.resposta.forEach(element => {
                 const options = {
                     method: 'GET',
@@ -118,7 +149,12 @@
                 fetch(`https://api.themoviedb.org/3/${element.tipoObra}/${element.idObra}?language=pt-BR`, options)
                 .then(response => response.json())
                 .then(response => {
-                    guardarFilmeSeries(response, element.Obra, element.avaliacao, element.idObra, element.tipoObra, element.comentario)
+                    penis++
+                    let baboe = false
+                    if (penis === pau) {
+                        baboe = true
+                    }
+                    guardarFilmeSeries(response, element.Obra, element.avaliacao, element.idObra, element.tipoObra, element.comentario, baboe)
                 })
                 .catch(err => console.error(err));
             });
@@ -127,18 +163,25 @@
             console.error('Erro ao enviar a solicitação:', error);
             alert('Algo de errado com o servidor.');
         })
-        // .finally(() => {
-        //     sessionStorage.setItem('obras', JSON.stringify(contentDisplay));
-        //     console.log(JSON.parse(sessionStorage.getItem('obras')))
-        //     gsap.to('.card', {
-        //         y: 0,
-        //         opacity: 1,
-        //         stagger: 0.13,
-        //         delay: 1.5,
-        //         duration: 0.1,
-        //     })
-        // })
+
+        //krl só sei que to feliz pq consegui fzr essa bosta funcionar(desculpa pessoa que estiver lendo meu código por meus palavreados e definicoes estranhas de variáveis) e agr farei um event listener que disparara o evento para carregar mais conteúdo
+        function verificarFimDoScroll(div) {
+            if (Math.abs(div.scrollHeight - div.clientHeight - div.scrollTop) <= 1) {
+                console.log(cf[1], JSON.parse(sessionStorage.getItem('obras')).length)
+                if (cf[1] <= JSON.parse(sessionStorage.getItem('obras')).length) {
+                    showCardObra(cf[0], cf[1])
+                }
+            }
+        }
+
         const myText = new SplitType("#titulo")
+        // gsap.to('.card', {
+        //     y: 0,
+        //     opacity: 1,
+        //     stagger: 0.13,
+        //     delay: 1.5,
+        //     duration: 0.1,
+        // })
         gsap.to('.char', {
             y: 0,
             opacity: 1,

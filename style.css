@@ -208,6 +208,18 @@ main #content {
     opacity: 0;
 }
 
+#caixa-armazem .cardmore {
+    width: 192.92px;
+    height: 364px;
+    background-color: rgb(50, 50, 50);
+    margin: 25px;
+    border-radius: 10px;
+    text-align: left;
+    transition: all 0.3s ease;
+    transform: translateY(13px);
+    opacity: 0;
+}
+
 #caixa-armazem .card:hover {
     cursor: pointer;
 }
