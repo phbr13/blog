@@ -52,9 +52,9 @@
     <script src="https://unpkg.com/split-type"></script>
     <script src="script.js"></script>
     <script>
-        //funcao para criar card da obra de acordo com dados armazenados no session storage, com o intuito de otimizar o site carregando conteudo de 15 em 15(de acordo com a scrollagem) para nao pesar muito, deu pra entender?? :X
-        let contentDisplay = []
-        function criarCardObra(infoObra) {
+        //funcao para criar e mostrar card da obra de acordo com dados armazenados no session storage, com o intuito de otimizar o site carregando conteudo de 15 em 15(de acordo com a scrollagem) para nao pesar muito, deu pra entender?? :X
+        sessionStorage.setItem('obras', JSON.stringify([]));
+        function showCardObra(infoObra) {
             console.log(infoObra)
             const caixaArmazem = document.querySelector("#caixa-armazem")
             caixaArmazem.innerHTML += `
@@ -78,8 +78,8 @@
             mudarStar(infoObra.aval, false, infoObra.id)
         }
 
-        //funcao para mostrar dados pegos BETA
-        function showFilmeSeries(response, nome, aval, id, tipo, coment) {
+        //funcao para guardar dados pegos na databaseAPI
+        function guardarFilmeSeries(response, nome, aval, id, tipo, coment) {
             let tipoObra
             if (tipo === 'movie') {tipoObra = 'Filme'}
             if (tipo === 'tv') {tipoObra = 'Série'}
@@ -91,8 +91,9 @@
                 coment: coment,
                 moreInfo: response
             }
-            sessionStorage.setItem(id, JSON.stringify(obra));
-            criarCardObra(JSON.parse(sessionStorage.getItem(id)))
+            let contentDisplay = JSON.parse(sessionStorage.getItem('obras'))
+            contentDisplay.push(obra)
+            sessionStorage.setItem('obras', JSON.stringify(contentDisplay))
         }
 
         //requisição para api para pegar filmeseries salvos(e suas avaliacoes e comentários) na alcalcova e dps fzr requisicao para a API do TMDB para complementar informações
@@ -117,15 +118,7 @@
                 fetch(`https://api.themoviedb.org/3/${element.tipoObra}/${element.idObra}?language=pt-BR`, options)
                 .then(response => response.json())
                 .then(response => {
-                    console.log(element.lenght)
-                    showFilmeSeries(response, element.Obra, element.avaliacao, element.idObra, element.tipoObra, element.comentario)
-                    gsap.to('.card', {
-                        y: 0,
-                        opacity: 1,
-                        stagger: 0.13,
-                        delay: 1.5,
-                        duration: 0.1,
-                    })
+                    guardarFilmeSeries(response, element.Obra, element.avaliacao, element.idObra, element.tipoObra, element.comentario)
                 })
                 .catch(err => console.error(err));
             });
@@ -133,7 +126,18 @@
         .catch(error => {
             console.error('Erro ao enviar a solicitação:', error);
             alert('Algo de errado com o servidor.');
-        });
+        })
+        // .finally(() => {
+        //     sessionStorage.setItem('obras', JSON.stringify(contentDisplay));
+        //     console.log(JSON.parse(sessionStorage.getItem('obras')))
+        //     gsap.to('.card', {
+        //         y: 0,
+        //         opacity: 1,
+        //         stagger: 0.13,
+        //         delay: 1.5,
+        //         duration: 0.1,
+        //     })
+        // })
         const myText = new SplitType("#titulo")
         gsap.to('.char', {
             y: 0,
