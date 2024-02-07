@@ -62,11 +62,21 @@
             if (fim > 15) {
                 card = 'cardmore'
             }
+            if (array.length < 15) {
+                fim = array.length
+            }
             for (let index = comeco; index < fim; index++) {
-                const element = array[index];
+                let img
+                const element = array[index]
+                console.log(element.moreInfo.poster_path)
+                if (element.moreInfo.poster_path === null) {
+                    img = 'imgs/none.jpg'
+                } else {
+                    img = 'https://image.tmdb.org/t/p/w500/' + element.moreInfo.poster_path
+                }
                 caixaArmazem.innerHTML += `
                 <div class="card ${card}">
-                    <img loading="lazy" src="https://image.tmdb.org/t/p/w500/${element.moreInfo.poster_path}" alt="">
+                    <img loading="lazy" src="${img}" alt="">
                     <h3 title="${element.nome}">${element.nome}</h3>
                     <h5 style="margin-top: -5px; margin-left: 10px; margin-bottom: 5px; font-family: sans-serif;"><span style="font-size: 13.72px; color: #797979;">${element.tipoObra}</span></h5>
                     <div title="${element.aval}" id="todas-estrelas">
@@ -135,7 +145,9 @@
         .then(response => response.json())
         .then(data => {
             const caixaArmazem = document.querySelector("#caixa-armazem")
-            caixaArmazem.innerHTML = ""
+            if (data.resposta.length !== 0) {
+                caixaArmazem.innerHTML = ""
+            }
             let penis = 0
             const pau = data.resposta.length
             data.resposta.forEach(element => {
@@ -167,7 +179,6 @@
         //krl só sei que to feliz pq consegui fzr essa bosta funcionar(desculpa pessoa que estiver lendo meu código por meus palavreados e definicoes estranhas de variáveis) e agr farei um event listener que disparara o evento para carregar mais conteúdo
         function verificarFimDoScroll(div) {
             if (Math.abs(div.scrollHeight - div.clientHeight - div.scrollTop) <= 1) {
-                console.log(cf[1], JSON.parse(sessionStorage.getItem('obras')).length)
                 if (cf[1] <= JSON.parse(sessionStorage.getItem('obras')).length) {
                     showCardObra(cf[0], cf[1])
                 }
@@ -175,13 +186,6 @@
         }
 
         const myText = new SplitType("#titulo")
-        // gsap.to('.card', {
-        //     y: 0,
-        //     opacity: 1,
-        //     stagger: 0.13,
-        //     delay: 1.5,
-        //     duration: 0.1,
-        // })
         gsap.to('.char', {
             y: 0,
             opacity: 1,
