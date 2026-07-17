@@ -213,14 +213,9 @@ function displayContent(especificar) {
     const search = document.querySelector("#searchbar").value
     const resultadoPesquisa = document.querySelector("#resultado-pesquisa")
     resultadoPesquisa.innerHTML=''
-    const options = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzNjZlMTM5MjFiODIwYWFhZmE2YTY5MjYwNDlmMmUwNyIsInN1YiI6IjY1OTViMmJiMzI2ZWMxMDY3MTA2YzE4MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.7JFdsfoWvql9rEP_XyrKv2SB8HpXbvJHg4o9bDhYc14'
-        }
-    };
-    fetch(`https://api.themoviedb.org/3/search/${especificar}?query=${search}&include_adult=false&language=pt-BR&page=1`, options)
+    // Busca via nosso próprio servidor, que guarda o token da TMDB em segredo
+    const tipoTmdb = especificar === "tv" ? "tv" : "movie";
+    fetch(`http://localhost:1313/api/tmdb/search/${tipoTmdb}?query=${encodeURIComponent(search)}`)
     .then(response => response.json())
     .then(response => {
         response.results.forEach(element => {
